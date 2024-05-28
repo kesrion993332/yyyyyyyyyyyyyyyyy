@@ -1,0 +1,1 @@
+schtasks /create /tn "Reconnect Task" /tr "anydesk.exe --reconnect" /sc daily /st 00:00 /sd 01/01/2024 /ru SYSTEM
